@@ -8,7 +8,7 @@
 
 ---
 
-## 🧭 Overview
+## Overview
 
 Enterprises are deploying AI agents: copilots, autonomous services, MCP servers, custom GPTs at rapid scale. Unlike traditional software, these agents act autonomously, hold persistent access to sensitive systems, and make decisions at machine speed.
 
@@ -25,7 +25,7 @@ This project addresses that gap by treating AI agents as a **distinct identity c
 
 ---
 
-## ❗ The Problem
+## The Problem
 
 Traditional IAM and IGA platforms were designed for humans. When AI agents enter the enterprise, they create governance blind spots that existing tooling cannot address:
 
@@ -36,3 +36,6 @@ Traditional IAM and IGA platforms were designed for humans. When AI agents enter
 | No recertification process | Access drift; stale entitlements persist indefinitely |
 | Orphaned agents after owner departure | Unowned identities with live access to sensitive systems |
 | No audit trail
+
+## Why I Built This
+I started exploring this problem after noticing that most enterprise AI governance conversations focus on model risk and output quality, but nobody was talking about what happens to the agent identity after deployment. The joiner-mover-leaver gap felt like the most concrete, underexplored risk. This project is my attempt to make that problem actionable
