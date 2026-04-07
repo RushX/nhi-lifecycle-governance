@@ -10,11 +10,11 @@
 
 ## 🧭 Overview
 
-Enterprises are deploying AI agents — copilots, autonomous services, MCP servers, custom GPTs — at rapid scale. Unlike traditional software, these agents act autonomously, hold persistent access to sensitive systems, and make decisions at machine speed.
+Enterprises are deploying AI agents: copilots, autonomous services, MCP servers, custom GPTs at rapid scale. Unlike traditional software, these agents act autonomously, hold persistent access to sensitive systems, and make decisions at machine speed.
 
 Yet most organizations have **no formal identity lifecycle governance** for them.
 
-This project addresses that gap by treating AI agents as a **distinct identity class** — applying the same joiner-mover-leaver discipline used for human identities, extended to the unique risk profile of autonomous agents.
+This project addresses that gap by treating AI agents as a **distinct identity class**, applying the same joiner-mover-leaver discipline used for human identities, extended to the unique risk profile of autonomous agents.
 
 **This repository contains:**
 - A 5-stage AI agent identity lifecycle model
