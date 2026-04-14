@@ -174,6 +174,7 @@ All provisioning events are written to the audit log:
 - **C-PRO-04:** Credentials must carry expiration dates; no non-expiring credentials for any agent
 - **C-PRO-05:** Separation of duties enforced at provisioning time
 
+
 ### Failure Modes Addressed
 - Over-provisioned agents with excess write access (**EchoLeak CVE-2025-32711**)
 - Agents provisioned on human credentials that persist after owner departure
@@ -252,7 +253,7 @@ Audit logs are append-only, tamper-evident, and retained per applicable complian
 - **C-MON-03:** Owner departure triggers agent suspension within 24 hours
 - **C-MON-04:** Audit logs are append-only and cannot be modified by the agent or its owner
 - **C-MON-05:** Dormant agents (no activity for 30 days) are flagged for retirement review
-
+- **C-MON-06:** Agents in `pending_review` status are suspended from action execution until explicitly cleared by an authorized reviewer
 ### Failure Modes Addressed
 - Orphaned agents continuing to operate after owner departure (**Samsung 2023 / IBM 2025**)
 - Prompt injection exfiltration going undetected (**EchoLeak CVE-2025-32711**)
@@ -450,6 +451,7 @@ All controls referenced in this document, indexed for traceability:
 | C-MON-03 | Monitor | Owner departure triggers suspension within 24 hours |
 | C-MON-04 | Monitor | Audit logs are append-only and tamper-evident |
 | C-MON-05 | Monitor | Dormant agents flagged for retirement after 30 days |
+| C-MON-06 | Monitor | Agents in pending_review blocked from execution until cleared |
 | C-REC-01 | Recertify | No agent active beyond 90 days without recertification |
 | C-REC-02 | Recertify | Recertification requires a human decision |
 | C-REC-03 | Recertify | Excess permissions removed before certification completes |
