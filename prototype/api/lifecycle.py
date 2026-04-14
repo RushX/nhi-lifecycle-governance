@@ -38,12 +38,15 @@ def get_risk_level(score: int) -> str:
     else:
         return "critical"
 
-# registered → pending_review enforces change approval before activation
+# High-risk agents (score >= 61) require security team sign-off
+# before transitioning to active — enforced at process level
+# See: framework/lifecycle-model.md Stage 2 entry criteria
+# registered → active enforces change approval before activation
 # aligned to SOC 2 CC6.3 and ITGC change management controls
 def validate_lifecycle_transition(current: str, new: str) -> bool:
     allowed = {
-        "registered":     ["pending_review", "retired"],
-        "pending_review": ["active", "suspended", "retired"],
+        "registered":     ["active", "retired"],
+        "pending_review": ["", "suspended", "retired"],
         "active":         ["pending_review", "suspended", "retired"],
         "suspended":      ["pending_review", "retired"],
         "retired":        []

@@ -159,7 +159,7 @@ All provisioning events are written to the audit log:
 ### Entry Criteria
 - Valid registry entry (Stage 1 complete)
 - Policy engine validation passed
-- For High/Critical risk: secondary approval from security team
+- High-risk agents (risk_score ≥ 61) require explicit security team sign-off before status transitions to active. This is a process control — the state machine permits the transition but policy requires documented approval.
 
 ### Exit Criteria (gate to Monitor)
 - Service credentials issued and logged
