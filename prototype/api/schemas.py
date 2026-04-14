@@ -5,6 +5,7 @@ from models import AgentStatus, RiskLevel
 
 class AgentCreate(BaseModel):
     agent_name: str
+    registered_by: str
     # Agent type is captured as metadata for filtering and audit purposes. I deliberately excluded it from scoring because it overlaps with autonomy level — both measure behavioral risk. Adding it would double-count that dimension and inflate scores for autonomous agents. I noted it as a v2.0 consideration pending empirical validation.
     agent_type: Literal["copilot", "autonomous", "api-connected", "workflow"]
     owner_id: str

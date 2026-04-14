@@ -39,3 +39,9 @@ Traditional IAM and IGA platforms were designed for humans. When AI agents enter
 
 ## Why I Built This
 I started exploring this problem after noticing that most enterprise AI governance conversations focus on model risk and output quality, but nobody was talking about what happens to the agent identity after deployment. The joiner-mover-leaver gap felt like the most concrete, underexplored risk. This project is my attempt to make that problem actionable
+
+
+
+## Notes
+> Note: `registered_by` is passed in the request body as a simplification. 
+> In production this would be derived from the authenticated user session.
