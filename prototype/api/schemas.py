@@ -58,3 +58,7 @@ class AuditLogResponse(BaseModel):
 
     class Config:
         from_attributes = True
+        
+class CertifyRequest(BaseModel):
+    performed_by: str
+    notes: Optional[str] = None

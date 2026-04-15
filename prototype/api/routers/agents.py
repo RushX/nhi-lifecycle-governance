@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from database import get_db
 from models import Agent, AuditLog
-from schemas import AgentCreate, AgentResponse, StatusUpdate, AuditLogResponse
+from schemas import AgentCreate, AgentResponse, CertifyRequest, StatusUpdate, AuditLogResponse
 from lifecycle import calculate_risk_score, get_risk_level, validate_lifecycle_transition
 from audit import log_event
 router = APIRouter(prefix="/agents", tags=["agents"])
@@ -54,7 +54,7 @@ def update_status(agent_id: str, payload: StatusUpdate,
     if not validate_lifecycle_transition(agent.status, payload.status):
         raise HTTPException(
             status_code=400,
-            detail=f"Invalid transition: {agent.status} → {payload.status}"
+            detail=f"Invalid transition: {agent.status.value} → {payload.status.value}"
         )
     old_status = agent.status
     agent.status = payload.status
@@ -63,3 +63,30 @@ def update_status(agent_id: str, payload: StatusUpdate,
     log_event(db, agent_id, "STATUS_CHANGE", payload.performed_by,
               f"{old_status.value} → {payload.status.value} | Reason: {payload.reason}")
     return agent
+
+@router.post("/{agent_id}/certify", response_model=AgentResponse)
+def certify_agent(agent_id: str, payload: CertifyRequest,
+                  db: Session = Depends(get_db)):
+    from datetime import datetime, timezone
+    agent = db.query(Agent).filter(Agent.agent_id == agent_id).first()
+    if not agent:
+        raise HTTPException(status_code=404, detail="Agent not found")
+    if agent.status == "retired":
+        raise HTTPException(status_code=400,
+                            detail="Cannot certify a retired agent")
+    agent.last_reviewed = datetime.now(timezone.utc)
+    agent.status = "active"
+    db.commit()
+    db.refresh(agent)
+    log_event(db, agent_id, "RECERTIFIED", payload.performed_by,
+              f"Recertification completed. Notes: {payload.notes}.")
+    return agent
+
+@router.get("/{agent_id}/audit", response_model=List[AuditLogResponse])
+def get_audit_log(agent_id: str, db: Session = Depends(get_db)):
+    logs = db.query(AuditLog).filter(
+        AuditLog.agent_id == agent_id
+    ).order_by(AuditLog.timestamp).all()
+    if not logs:
+        raise HTTPException(status_code=404, detail="No audit logs found")
+    return logs 

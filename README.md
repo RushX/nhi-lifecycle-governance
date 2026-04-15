@@ -40,7 +40,17 @@ Traditional IAM and IGA platforms were designed for humans. When AI agents enter
 ## Why I Built This
 I started exploring this problem after noticing that most enterprise AI governance conversations focus on model risk and output quality, but nobody was talking about what happens to the agent identity after deployment. The joiner-mover-leaver gap felt like the most concrete, underexplored risk. This project is my attempt to make that problem actionable
 
+## Planned UI Features
+- Overdue recertification dashboard — agents where last_reviewed > 90 days
+  flagged visually, bulk pending_review trigger available
+- Risk heatmap — agents plotted by risk_score and status
+- Owner dashboard — all agents owned by a specific user
 
+## Planned Integrations
+- IdP webhook integration — owner departure triggers automatic 
+  agent suspension (Okta, Azure AD, Entra ID)
+- HR system sync — owner status continuously validated against 
+  HR records
 
 ## Notes
 > Note: `registered_by` is passed in the request body as a simplification. 
