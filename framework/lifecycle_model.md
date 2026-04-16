@@ -60,7 +60,7 @@ An agent without an owner, an audit trail, or a declared use case is a liability
 ### Definition
 Registration is the act of formally creating an AI agent identity in the enterprise registry before any access is granted. No agent may receive enterprise credentials, connect to internal systems, or process organizational data without a valid registry entry.
 
-Registration is the hub of the lifecycle, every subsequent stage depends on the integrity of the information captured here.
+Upon successful registration, the agent is automatically placed in `pending_review` status. No agent transitions to `active` without explicit human certification — enforcing the ITGC change approval gate at the system level.
 
 ### Trigger Events
 - A team requests deployment of a new AI agent, copilot, or autonomous service
@@ -85,7 +85,7 @@ Registration is the hub of the lifecycle, every subsequent stage depends on the 
 | `deployment_env` | Production / staging / development | Yes |
 | `eol_date` | Declared end-of-life or renewal date | Yes |
 | `risk_score` | Calculated at registration (see Risk Scoring Model) | Auto |
-| `status` | Lifecycle state: registered / active / pending_review / retired | Auto |
+| `status` | Lifecycle state: pending_review / active / suspended / retired | Auto |
 | `created_at` | Timestamp of registration | Auto |
 | `last_reviewed` | Timestamp of most recent recertification | Auto |
 
@@ -441,6 +441,7 @@ All controls referenced in this document, indexed for traceability:
 | C-REG-03 | Register | Autonomy level ≥ 3 requires threat model |
 | C-REG-04 | Register | All agents must declare an EOL date |
 | C-REG-05 | Register | Shadow agents must be registered or decommissioned |
+| C-REG-06 | Register | Agent status automatically set to `pending_review` on registration — activation requires explicit human certification |
 | C-PRO-01 | Provision | Human credentials prohibited; service accounts required |
 | C-PRO-02 | Provision | Policy engine must approve all provisioning |
 | C-PRO-03 | Provision | Tool-call scope explicitly whitelisted; deny-by-default |

@@ -99,28 +99,27 @@ Full interactive documentation available at `/docs` when running locally.
 
 ### The story
 Acme Corp deploys an autonomous finance agent to reconcile their invoices. The agent is registered, scored as critical risk, reviewed and activated by the security team, recertified, then suspended when the owner departs.
-
 ### Step 1 — Register the agent
-`POST /agents/` — agent is initially registered with calculated risk score 100, level critical, status is kept to be registered.
+Agent automatically created with status `pending_review` and risk score 100 critical.
 
-### Step 2 — Invalid transition blocked
-`PATCH /agents/{id}/status` — attempt to move directly to `pending_review` returns 400. State machine enforces valid transitions only.
+### Step 2 — Invalid transition blocked  
+Attempt `pending_review → active` via status update returns 400.
+Activation only allowed through /certify.
 
-### Step 3 — Security team activation
-`PATCH /agents/{id}/status` — security team reviews critical risk agent 
-and moves to `active` with documented reason.
+### Step 3 — Security team certifies
+POST /certify — security team formally approves. Status → active, last_reviewed timestamp set.
 
-### Step 4 — Recertification
-`POST /agents/{id}/certify` — 90-day review completed. 
-`last_reviewed` timestamp populated. Clock resets.
+### Step 4 — Trigger recertification
+PATCH /status — move to pending_review (90-day review trigger)
 
-### Step 5 — Owner departure
-`PATCH /agents/{id}/status` — IdP system suspends agent when owner 
-departs organization. Automated governance response.
+### Step 5 — Recertify
+POST /certify — access reviewed, agent cleared. Status → active, clock resets.
 
-### Step 6 — Audit trail
-`GET /agents/{id}/audit` — complete chronological history of every 
-governance action, fully attributed, tamper-evident.
+### Step 6 — Owner departure
+PATCH /status — suspended by IdP system.
+
+### Step 7 — Audit trail
+Complete chronological history of every governance action.
 
 ### Screenshots
 See `docs/demo/` for screenshots of each step.

@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from database import get_db
-from models import Agent, AuditLog
+from models import Agent, AgentStatus, AuditLog
 from schemas import AgentCreate, AgentResponse, CertifyRequest, StatusUpdate, AuditLogResponse
 from lifecycle import calculate_risk_score, get_risk_level, validate_lifecycle_transition
 from audit import log_event
@@ -49,8 +49,14 @@ def register_agent(payload: AgentCreate, db: Session = Depends(get_db)):
 def update_status(agent_id: str, payload: StatusUpdate,
                   db: Session = Depends(get_db)):
     agent = db.query(Agent).filter(Agent.agent_id == agent_id).first()
+    
     if not agent:
         raise HTTPException(status_code=404, detail="Agent not found")
+    if payload.status == AgentStatus.active:
+        raise HTTPException(
+            status_code=400,
+            detail="Use POST /certify to activate an agent — activation requires formal recertification"
+        )
     if not validate_lifecycle_transition(agent.status, payload.status):
         raise HTTPException(
             status_code=400,
@@ -71,11 +77,13 @@ def certify_agent(agent_id: str, payload: CertifyRequest,
     agent = db.query(Agent).filter(Agent.agent_id == agent_id).first()
     if not agent:
         raise HTTPException(status_code=404, detail="Agent not found")
-    if agent.status == "retired":
-        raise HTTPException(status_code=400,
-                            detail="Cannot certify a retired agent")
+    if agent.status != AgentStatus.pending_review:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Agent must be in pending_review to certify — current status: {agent.status.value}"
+        )
     agent.last_reviewed = datetime.now(timezone.utc)
-    agent.status = "active"
+    agent.status = AgentStatus.active
     db.commit()
     db.refresh(agent)
     log_event(db, agent_id, "RECERTIFIED", payload.performed_by,

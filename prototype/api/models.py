@@ -4,9 +4,8 @@ from database import Base
 import enum
 
 class AgentStatus(str, enum.Enum):
-    registered = "registered"
-    active = "active"
     pending_review = "pending_review"
+    active = "active"
     suspended = "suspended"
     retired = "retired"
 
@@ -34,7 +33,7 @@ class Agent(Base):
     eol_date       = Column(DateTime, nullable=False)
     risk_score     = Column(Integer, default=0)
     risk_level     = Column(Enum(RiskLevel), default=RiskLevel.low)
-    status         = Column(Enum(AgentStatus), default=AgentStatus.registered)
+    status         = Column(Enum(AgentStatus), default=AgentStatus.pending_review)
     created_at     = Column(DateTime(timezone=True), server_default=func.now())
     last_reviewed  = Column(DateTime(timezone=True), nullable=True)
     

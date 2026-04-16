@@ -45,8 +45,7 @@ def get_risk_level(score: int) -> str:
 # aligned to SOC 2 CC6.3 and ITGC change management controls
 def validate_lifecycle_transition(current: str, new: str) -> bool:
     allowed = {
-        "registered":     ["active", "retired"],
-        "pending_review": ["", "suspended", "retired"],
+        "pending_review": ["suspended", "retired"],
         "active":         ["pending_review", "suspended", "retired"],
         "suspended":      ["pending_review", "retired"],
         "retired":        []
