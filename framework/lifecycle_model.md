@@ -60,7 +60,7 @@ An agent without an owner, an audit trail, or a declared use case is a liability
 ### Definition
 Registration is the act of formally creating an AI agent identity in the enterprise registry before any access is granted. No agent may receive enterprise credentials, connect to internal systems, or process organizational data without a valid registry entry.
 
-Upon successful registration, the agent is automatically placed in `pending_review` status. No agent transitions to `active` without explicit human certification — enforcing the ITGC change approval gate at the system level.
+Registration is the hub of the lifecycle, every subsequent stage depends on the integrity of the information captured here. Upon successful registration, the agent is automatically placed in `pending_review` status. No agent transitions to `active` without explicit human certification — enforcing the ITGC change approval gate at the system level.
 
 ### Trigger Events
 - A team requests deployment of a new AI agent, copilot, or autonomous service
