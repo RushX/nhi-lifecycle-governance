@@ -40,6 +40,11 @@ Traditional IAM and IGA platforms were designed for humans. When AI agents enter
 ## Why I Built This
 I started exploring this problem after noticing that most enterprise AI governance conversations focus on model risk and output quality, but nobody was talking about what happens to the agent identity after deployment. The joiner-mover-leaver gap felt like the most concrete, underexplored risk. This project is my attempt to make that problem actionable
 
+
+## Architecture
+
+![System Architecture](./docs/architecture-diagram.png)
+
 ## Planned UI Features
 - Overdue recertification dashboard — agents where last_reviewed > 90 days
   flagged visually, bulk pending_review trigger available
