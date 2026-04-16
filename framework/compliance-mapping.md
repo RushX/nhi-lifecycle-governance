@@ -47,7 +47,7 @@ Where a control satisfies multiple requirements within the same framework, all r
 
 ### Framework Notes
 
-**NIST AI RMF:** The GOVERN function requires organizations to establish policies and assign accountability before AI systems operate. Registration directly instantiates GOVERN 1.1 and 1.2 by creating an enforceable record of ownership and policy acknowledgment at the point of agent creation.
+**NIST AI RMF:** The GOVERN function requires organizations to establish policies and assign accountability before AI systems operate. Registration directly instantiates GOVERN 1.1 and 1.2 by creating an enforceable record of ownership and policy acknowledgment at the point of agent creation. The automatic placement of agents in `pending_review` status at registration directly implements GOVERN 1.1's requirement for enforceable policies before AI systems operate.
 
 **ISO 42001:** Clause 6.1 requires a systematic risk assessment process. Registration is the trigger for that process, no assessment can occur for an agent that isn't formally identified.
 
@@ -164,6 +164,10 @@ Where a control satisfies multiple requirements within the same framework, all r
 | Monitor | GOVERN 4.1 / MANAGE 2.4, 4.1 / MEASURE 2.1, 2.5 | 5.3, 9.1, 10.1 | CC7.2, CC7.3 | Art. 9, 12 |
 | Recertify | GOVERN 4.1, 6.1 / MANAGE 2.4, 4.1 / MEASURE 2.5 | 5.1, 9.1, 9.3, 10.1, 10.2 | CC1.2, CC4.1, CC6.3, CC7.3 | Art. 9, 12, 14 |
 | Retire | MANAGE 1.3, 2.4, 4.2 / MEASURE 2.5 | 8.4, 9.1 | CC6.5, CC7.2 | Art. 9, 12 |
+
+> **Note:** C-REG-06 (automatic pending_review on registration) strengthens 
+> CC6.1 (logical access security) and Art. 9 (risk management) by ensuring 
+> no agent operates without explicit human approval.
 
 ### Key Observations
 
