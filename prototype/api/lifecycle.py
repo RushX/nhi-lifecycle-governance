@@ -41,7 +41,6 @@ def get_risk_level(score: int) -> str:
 # High-risk agents (score >= 61) require security team sign-off
 # before transitioning to active — enforced at process level
 # See: framework/lifecycle-model.md Stage 2 entry criteria
-# registered → active enforces change approval before activation
 # aligned to SOC 2 CC6.3 and ITGC change management controls
 def validate_lifecycle_transition(current: str, new: str) -> bool:
     allowed = {
